@@ -23,6 +23,7 @@ public class Main {
         Library.getAddingToBooks().addToListOfBooks(book1, 6);
         Library.getAddingToBooks().addToListOfBooks(book2, 3);
         Library.getAddingToBooks().addToListOfBooks(book3, 2);
+
         System.out.println();
         System.out.println("The list of books registered in the library:");
         Library.getListOfBooks().stream().forEach(book -> System.out.println(book));

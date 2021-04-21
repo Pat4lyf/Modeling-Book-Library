@@ -92,6 +92,9 @@ public class Person implements Comparable<Person> {
             System.out.println("Hello, " + this.nameOfPerson + " you have been added to the queue, but we need "
                     + (3 - Library.personQueue.size()) + " more people before processing requests.");
         }
+        else {
+            System.out.println("We are about to start processing requests.");
+        }
     }
 
     @Override

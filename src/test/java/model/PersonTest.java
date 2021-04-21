@@ -4,9 +4,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import servicesimplementation.ImplementationUsingQueue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -18,6 +15,7 @@ class PersonTest {
 
     @BeforeAll
     static void setUp() {
+        Person.listOfAllBookRequests.removeAll(Person.listOfAllBookRequests);
         person.requestForBook(book2);
         person1.requestForBook(book2);
         person2.requestForBook(book2);
@@ -36,8 +34,8 @@ class PersonTest {
         assertEquals(3, Library.personQueue.size());
         assertNotEquals(0, Library.personQueue.size());
 
-//        assertEquals(1,  Person.listOfAllBookRequests.size());
-//        assertNotEquals(3, Person.listOfAllBookRequests.size());
+        assertEquals(1, Person.listOfAllBookRequests.size());
+        assertNotEquals(3, Person.listOfAllBookRequests.size());
     }
 
 

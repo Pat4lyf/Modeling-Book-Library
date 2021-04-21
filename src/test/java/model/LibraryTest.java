@@ -13,13 +13,16 @@ class LibraryTest {
     static Book book2 = new Book("The Orphan Boy", "Alex Jobs");
     static Person person1 = new Person("Glory", "Senior Student");
     static Person person2 = new Person("Pat", "Teacher");
+    static Book book3 = new Book("Blooming Flowers", "John Max");
 
     @BeforeAll
     static void setUp() {
+        Library.listOfBooks.removeAll(Library.listOfBooks);
         person.requestForBook(book2);
         person1.requestForBook(book2);
         person2.requestForBook(book2);
         Library.getAddingToBooks().addToListOfBooks(book2, 6);
+        Library.getAddingToBooks().addToListOfBooks(book3, 7);
     }
 
 
@@ -34,8 +37,8 @@ class LibraryTest {
 
     @Test
     void testForGetListOfBooks() {
-        System.out.println(Library.getListOfBooks());
-//        assertEquals(1, Library.listOfBooks.size());
+        System.out.println("Books:" + Library.getListOfBooks());
+        assertEquals(2, Library.listOfBooks.size());
         assertNotEquals(3, Library.getListOfBooks().size());
     }
 
