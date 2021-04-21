@@ -1,14 +1,9 @@
 package servicesimplementation;
 
 import model.Library;
-import model.Person;
 import services.LibraryTask;
 
 public class ImplementationUsingQueue {
-
-    public LibraryTask getLibraryTask() {
-        return libraryTask;
-    }
 
     LibraryTask libraryTask = () -> {
         if (Library.personQueue.size() >= 3) {
@@ -30,6 +25,12 @@ public class ImplementationUsingQueue {
                     System.out.println(person.getBookRequestOfPerson().getTitleOfBook() + " is not available in this library.");
                 }
             });
+        } else {
+            System.out.println("The size of the queue must be 3 and above, before processing requests.");
         }
     };
+
+    public LibraryTask getLibraryTask() {
+        return libraryTask;
+    }
 }

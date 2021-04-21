@@ -1,17 +1,27 @@
 package model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Map;
 
 public class Person implements Comparable<Person> {
+
+    /**
+     * defining the fields of the Person class
+     */
     private String nameOfPerson;
     private String roleOfPerson;
     private int levelOfPerson;
     private Book bookRequestOfPerson = null;
-    public static Map<Book, Integer> mapOfAllBookRequests = new HashMap();
+    public static List<Book> listOfAllBookRequests = new ArrayList<>();
 
 
+    /**
+     * A constructor
+     *
+     * @param nameOfPerson the name of the person
+     * @param roleOfPerson the role of the person
+     */
     public Person(String nameOfPerson, String roleOfPerson) {
         this.nameOfPerson = nameOfPerson;
         this.roleOfPerson = roleOfPerson;
@@ -43,6 +53,9 @@ public class Person implements Comparable<Person> {
         return bookRequestOfPerson;
     }
 
+    /**
+     * Method to assign level to a person based on the role of that person
+     */
     private void assignLevelToPerson() {
         if (this.roleOfPerson.equalsIgnoreCase("Teacher")) {
             levelOfPerson = 1;
@@ -55,21 +68,25 @@ public class Person implements Comparable<Person> {
         }
     }
 
-
-//    public int getNumberOfRequestsForBook() {
-//        return numberOfRequestsForBook;
-//    }
-
+    /**
+     * Method to request for a book
+     *
+     * @param book the book requested for
+     */
     public void requestForBook(Book book) {
         this.bookRequestOfPerson = book;
-        Library.personQueue.add(this);
-       int numberOfRequestsForBook = 1;
 
-        if (mapOfAllBookRequests.containsKey(book)) {
-            numberOfRequestsForBook = mapOfAllBookRequests.get(book) + 1;
+        //ADDING THE PERSON TO THE QUEUE
+        if (!Library.personQueue.contains(this) && this != null) {
+            Library.personQueue.add(this);
+        } else {
+            System.out.println("You are already in the queue");
         }
-        //ADDING THE BOOK AND THE BOOK QUANTITY TO THE MAP OF ALL BOOK REQUESTS
-         mapOfAllBookRequests.put(book,numberOfRequestsForBook);
+        //ADDING THE BOOK TO THE LIST OF ALL BOOK REQUESTS
+        if (!listOfAllBookRequests.contains(book)) {
+            listOfAllBookRequests.add(book);
+        }
+
 
         if (Library.personQueue.size() < 3) {
             System.out.println("Hello, " + this.nameOfPerson + " you have been added to the queue, but we need "
@@ -87,27 +104,40 @@ public class Person implements Comparable<Person> {
                 '}';
     }
 
+    /**
+     * Implementing a comparable
+     *
+     * @param person a person object
+     * @return the value
+     */
     @Override
     public int compareTo(Person person) {
-        if (this.levelOfPerson >= person.levelOfPerson){
+        if (this.levelOfPerson >= person.levelOfPerson) {
             return 1;
+        } else {
+            return -1;
         }
-        else {return -1;}
     }
 
+    /**
+     * Method to return a book to the library
+     */
     public void returnBook() {
         if (Library.mapOfBorrowers.containsKey(this.nameOfPerson)) {
-            if (Library.listOfBooks.contains(this.getBookRequestOfPerson())) {
-                int finalNumberOfCopiesOfBook = this.getBookRequestOfPerson().getNumberOfCopiesOfBook() + 1;
-                this.getBookRequestOfPerson().setNumberOfCopiesOfBook(finalNumberOfCopiesOfBook);
+            try {
+                Library.listOfBooks.stream().filter(book -> book.equals(this.getBookRequestOfPerson())).forEach(person -> {
+                    int finalNumberOfCopiesOfBook = this.getBookRequestOfPerson().getNumberOfCopiesOfBook() + 1;
+                    this.getBookRequestOfPerson().setNumberOfCopiesOfBook(finalNumberOfCopiesOfBook);
 
-                System.out.println(this.nameOfPerson + " has returned " + this.getBookRequestOfPerson().getTitleOfBook() + " to the library.");
-                Library.mapOfBorrowers.remove(this.nameOfPerson, this.getBookRequestOfPerson().getTitleOfBook());
-            } else {
-                System.out.println("This book is not from this library");
+                    System.out.println(this.nameOfPerson + " has returned " + this.getBookRequestOfPerson().getTitleOfBook() + " to the library.");
+                    Library.mapOfBorrowers.remove(this.nameOfPerson, this.getBookRequestOfPerson().getTitleOfBook());
+
+                });
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-        }
-        else {
+
+        } else {
             System.out.println("Your name is not in the list of borrowers.");
         }
     }

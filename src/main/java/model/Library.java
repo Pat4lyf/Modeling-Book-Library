@@ -7,23 +7,15 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Library {
-
+    public static Queue<Person> personQueue = new ConcurrentLinkedQueue<>();
+    /**
+     * defining the fields of the library class
+     */
     static List<Book> listOfBooks = new ArrayList<>();
     static Map<String, String> mapOfBorrowers = new HashMap<>();
-    public static Queue<Person> personQueue = new ConcurrentLinkedQueue<>();
-
-    public static Map<String, String> getMapOfBorrowers() {
-        return mapOfBorrowers;
-    }
-
-    public static List<Book> getListOfBooks() {
-        return listOfBooks;
-    }
-
-    public static AddingToBooks getAddingToBooks() {
-        return addingToBooks;
-    }
-
+    /**
+     * Method to add to the list of books in the library
+     */
     static AddingToBooks addingToBooks = (Book book, int bookQuantity) -> {
         if (listOfBooks.contains(book)) {
             int totalNumberOfCopies = book.getNumberOfCopiesOfBook() + bookQuantity;
@@ -37,11 +29,25 @@ public class Library {
 
         }
     };
-//        public static void addToListOfBooks(Book book, int bookQuantity) {
-//
-//        }
 
+    public static Map<String, String> getMapOfBorrowers() {
+        return mapOfBorrowers;
+    }
 
+    public static List<Book> getListOfBooks() {
+        return listOfBooks;
+    }
+
+    public static AddingToBooks getAddingToBooks() {
+        return addingToBooks;
+    }
+
+    /**
+     * Method to get the name and quantity of a book in the library
+     *
+     * @param book the book object
+     * @return the name and quantity of the book
+     */
     public String getBookDetails(Book book) {
         if (listOfBooks.contains(book)) {
             return String.format("Book name: %s, Quantity: %d",
@@ -52,13 +58,14 @@ public class Library {
 
     }
 
-
+    /**
+     * Method to get the title and quantity of each book in the library
+     */
     public void printBooksInBookList() {
-
         listOfBooks.forEach(book -> System.out.println("Book Title: " + book.getTitleOfBook()
-                        + ", Quantity: " + book.getNumberOfCopiesOfBook()));
-        }
-
+                + ", Quantity: " + book.getNumberOfCopiesOfBook()));
     }
+
+}
 
 

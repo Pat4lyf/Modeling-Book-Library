@@ -1,10 +1,19 @@
 package model;
 
 public class Book {
+    /**
+     * defining the fields of the Book class
+     */
     private String titleOfBook;
     private String authorOfBook;
     private int numberOfCopiesOfBook = 0;
 
+    /**
+     * A constructor
+     *
+     * @param titleOfBook  the title of the book
+     * @param authorOfBook the author of the book
+     */
     public Book(String titleOfBook, String authorOfBook) {
         this.titleOfBook = titleOfBook;
         this.authorOfBook = authorOfBook;
